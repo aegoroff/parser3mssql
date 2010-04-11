@@ -17,7 +17,6 @@
 		<FtpFolder>ftp://somehost.com/folder</FtpFolder>
 		<SvnPath>http://host.com/svn/parser3mssql/trunk</SvnPath>
 		<BinaryArchive>parser3sql_$(ApiVersion)_$(Build)_win32_mssql.zip</BinaryArchive>
-		<SourceArchive>parser3sql_$(ApiVersion)_$(Build)_win32_mssql_src.zip</SourceArchive>
 		<ChangeLog>ChangeLog.txt</ChangeLog>
 		<TestsFileNameWithoutExt>tests</TestsFileNameWithoutExt>
 	</PropertyGroup>
@@ -25,23 +24,6 @@
 		<ZipFiles Include="$(MSBuildProjectDirectory)\$(Configuration)\$(ProjectName).dll"/>
 		<ZipFiles Include="$(MSBuildProjectDirectory)\README.txt"/>
 		<ZipFiles Include="$(MSBuildProjectDirectory)\$(ChangeLog)"/>
-	</ItemGroup>
-	<ItemGroup>
-		<SourceFiles Include="**\*.cpp"/>
-		<SourceFiles Include="**\*.cc"/>
-		<SourceFiles Include="**\*.h"/>
-		<SourceFiles Include="**\*.C"/>
-		<SourceFiles Include="**\*.rc"/>
-		<SourceFiles Include="*.sln"/>
-		<SourceFiles Include="**\*.vcproj"/>
-		<SourceFiles Include="*.def"/>
-		<SourceFiles Include="Lib\ChangeLog\*.*"/>
-		<SourceFiles Include="Lib\gtest\lib\*.*"/>
-		<SourceFiles Include="Lib\gtest\include\gtest\*.*"/>
-		<SourceFiles Include="Lib\gtest\include\gtest\internal\*.*"/>
-		<SourceFiles Include="Build.txt"/>
-		<SourceFiles Include="$(ChangeLog)"/>
-		<SourceFiles Include="parser3mssql.xml"/>
 	</ItemGroup>
 	<ItemGroup>
 		<ResourceFile Include="$(MSBuildProjectDirectory)\parser3mssql.rc" />
@@ -69,27 +51,13 @@
 		<Exec 
 			WorkingDirectory="$(MSBuildProjectDirectory)"
 			Command='cscript.exe Lib\ChangeLog\svn2cl.vbs --group-by-day -i --authors Lib\ChangeLog\authors.xml --output $(MSBuildProjectDirectory)\$(ChangeLog) $(SvnPath)' />
-		<Message Text="SourceArchive: $(SourceArchive)"/>
 		<Message Text="BinaryArchive: $(BinaryArchive)"/>
-		<Zip
-			Files="@(SourceFiles)"
-			WorkingDirectory="$(MSBuildProjectDirectory)"
-			ZipFileName="$(SourceArchive)"
-			Flatten="false"
-		/>
 		<Zip Files="@(ZipFiles)" ZipFileName="$(BinaryArchive)" Flatten="true"/>
 	</Target>
 	<Target Name="Build" DependsOnTargets="Installer">
 		<FtpUpload 
 			LocalFile="$(BinaryArchive)"
 			RemoteUri="$(FtpFolder)/parser3sql_$(ApiVersion)_0_win32_mssql.zip"
-			Username="$(FtpLogin)"
-			Password="$(FtpPassword)"
-			Condition=" '$(IsUpload)'=='true' "
-		/>
-		<FtpUpload 
-			LocalFile="$(SourceArchive)"
-			RemoteUri="$(FtpFolder)/parser3sql_$(ApiVersion)_0_win32_mssql_src.zip"
 			Username="$(FtpLogin)"
 			Password="$(FtpPassword)"
 			Condition=" '$(IsUpload)'=='true' "
