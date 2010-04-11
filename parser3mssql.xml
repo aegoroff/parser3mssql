@@ -48,9 +48,6 @@
 		<ImportGoogleTests TestResultsPath="$(MSBuildProjectDirectory)\$(TestsFileNameWithoutExt).xml"/>
 	</Target>
 	<Target Name="Installer" DependsOnTargets="UnitTests">
-		<Exec 
-			WorkingDirectory="$(MSBuildProjectDirectory)"
-			Command='cscript.exe Lib\ChangeLog\svn2cl.vbs --group-by-day -i --authors Lib\ChangeLog\authors.xml --output $(MSBuildProjectDirectory)\$(ChangeLog) $(SvnPath)' />
 		<Message Text="BinaryArchive: $(BinaryArchive)"/>
 		<Zip Files="@(ZipFiles)" ZipFileName="$(BinaryArchive)" Flatten="true"/>
 	</Target>
