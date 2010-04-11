@@ -14,26 +14,30 @@
 #include "ConnectionString.h"
 #include "wexception.h"
 
-inline static bool IsNoLimit(unsigned long limit) {
+inline static bool IsNoLimit(unsigned long limit)
+{
     return limit == SQL_NO_LIMIT;
 }
 
 inline void SqlNativeDriver::_throw(
                                     SQL_Driver_services& rServices,
-                                    const std::exception& e) const {
+                                    const std::exception& e) const
+{
     rServices._throw(e.what());
 }
 
 inline void SqlNativeDriver::ThrowIfError(
     SQL_Driver_services& rServices,
-    bool isFailure) const {
+    bool isFailure) const
+{
     SQL_Error sqlError;
     if(isFailure) {
         rServices._throw(sqlError);
     }
 }
 
-inline void SqlNativeDriver::ValidateColumns(ULONG* pColumnsCount, SQL_Driver_services& rServices) const {
+inline void SqlNativeDriver::ValidateColumns(ULONG* pColumnsCount, SQL_Driver_services& rServices) const
+{
     if (pColumnsCount == NULL) {
         rServices._throw("null column number pointer");
     }
@@ -47,11 +51,13 @@ inline void SqlNativeDriver::ValidateColumns(ULONG* pColumnsCount, SQL_Driver_se
 
 SqlNativeDriver::SqlNativeDriver() : SQL_Driver() {}
 
-int SqlNativeDriver::api_version() {
+int SqlNativeDriver::api_version()
+{
     return SQL_DRIVER_API_VERSION;
 }
 
-const char* SqlNativeDriver::initialize(char* p) {
+const char* SqlNativeDriver::initialize(char* p)
+{
     UNREFERENCED_PARAMETER(p);
     return 0;
 }
@@ -64,7 +70,8 @@ const char* SqlNativeDriver::initialize(char* p) {
 void SqlNativeDriver::connect(
                               char* pConnString,
                               SQL_Driver_services& rServices,
-                              void** pConnection) {
+                              void** pConnection)
+{
     Connection& rConnection = *static_cast<Connection*>(rServices.malloc(sizeof(Connection)));
     *pConnection = &rConnection;
     rConnection.services = &rServices;
@@ -83,7 +90,8 @@ void SqlNativeDriver::connect(
     }
 }
 
-void SqlNativeDriver::disconnect(void* pConnection) {
+void SqlNativeDriver::disconnect(void* pConnection)
+{
     Connection& rConnection = *static_cast<Connection*>(pConnection);
     try {
         delete rConnection.pClient;
@@ -94,17 +102,20 @@ void SqlNativeDriver::disconnect(void* pConnection) {
     }
 }
 
-void SqlNativeDriver::commit(void* p) {
+void SqlNativeDriver::commit(void* p)
+{
     UNREFERENCED_PARAMETER(p);
     // do nothing
 }
 
-void SqlNativeDriver::rollback(void* p) {
+void SqlNativeDriver::rollback(void* p)
+{
     UNREFERENCED_PARAMETER(p);
     // do nothing
 }
 
-bool SqlNativeDriver::ping(void* p) {
+bool SqlNativeDriver::ping(void* p)
+{
     UNREFERENCED_PARAMETER(p);
     return true;
 }
@@ -112,7 +123,8 @@ bool SqlNativeDriver::ping(void* p) {
 const char* SqlNativeDriver::quote(
                                    void* pConnection,
                                    const char* from,
-                                   unsigned int length) {
+                                   unsigned int length)
+{
     Connection& rConnection = *static_cast<Connection*>(pConnection);
     char* result = static_cast<char*>(rConnection.services->malloc_atomic(length*2+1));
     char* to = result;
@@ -130,7 +142,8 @@ void SqlNativeDriver::InsertColumnValue(
     const CStringA& rMultibyteStr,
     Connection& rConnection,
     SQL_Driver_query_event_handlers& rHandlers,
-    SQL_Error& rSqlError) {
+    SQL_Error& rSqlError)
+{
     size_t length = rMultibyteStr.GetLength();
 
     char* pStr = static_cast<char*>(rConnection.services -> malloc_atomic(length+1));
@@ -145,7 +158,8 @@ void SqlNativeDriver::query(
     Placeholder* pPlaceholders,
     unsigned long offset,
     unsigned long limit,
-    SQL_Driver_query_event_handlers& rHandlers) {
+    SQL_Driver_query_event_handlers& rHandlers)
+{
     Connection& rConnection = *static_cast<Connection*>(pConnection);
     Client* pClient = rConnection.pClient;
     SQL_Driver_services& rServices = *rConnection.services;
@@ -182,7 +196,8 @@ void SqlNativeDriver::ExecuteReader(
         Connection& rConnection,
         SQL_Driver_query_event_handlers& rHandlers,
         unsigned long offset,
-        unsigned long limit) {
+        unsigned long limit)
+{
     Client* pClient = rConnection.pClient;
     SQL_Driver_services& rServices = *rConnection.services;
 
@@ -206,7 +221,8 @@ void SqlNativeDriver::ExecuteReader(
         unsigned long offset,
         unsigned long limit,
         size_t nPlaceholders,
-        Placeholder* pPlaceholders) {
+        Placeholder* pPlaceholders)
+{
     Client* pClient = rConnection.pClient;
     SQL_Driver_services& rServices = *rConnection.services;
 
@@ -257,7 +273,8 @@ void SqlNativeDriver::InsertColumn(
         Connection& rConnection,
         SQL_Driver_query_event_handlers& rHandlers,
         SQL_Error& rSqlError
-    ) {
+    )
+{
     char *pStr = 0;
     size_t length = rUnicodeStr.GetLength();
     if(length) {

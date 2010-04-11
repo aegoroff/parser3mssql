@@ -15,7 +15,8 @@
 
 inline void WriteErrorMessage(
                               CComPtr<IErrorInfo> pIErrorInfo,
-                              __deref_out std::wostream* pOstr) {
+                              __deref_out std::wostream* pOstr)
+{
     // IErrorInfo values.
     CComBSTR bstrDescription;
     CComBSTR bstrSource;
@@ -40,7 +41,8 @@ inline void WriteErrorMessage(
 inline void ComSession::DumpErrorInfo(
                                       std::wostream* pOstr,
                                       IUnknown* pObjectWithError,
-                                      REFIID IID_InterfaceWithError) const {
+                                      REFIID IID_InterfaceWithError) const
+{
     // Interfaces used in the example.
     CComPtr<IErrorInfo> pIErrorInfoAll;
     CComPtr<IErrorRecords> pIErrorRecords;
@@ -119,25 +121,30 @@ inline void ComSession::DumpErrorInfo(
 // status or error information.
 inline void ComSession::DumpErrorInfo(
                                       IUnknown* pObjectWithError,
-                                      REFIID IID_InterfaceWithError) const {
+                                      REFIID IID_InterfaceWithError) const
+{
     DumpErrorInfo(&std::wcout, pObjectWithError, IID_InterfaceWithError);
 }
 
-ComSession::ComSession() {
+ComSession::ComSession()
+{
     HRESULT hr = CoInitializeEx(0, COINIT_MULTITHREADED);
     ThrowIfError(hr, L"Failed to initialize COM library");
 }
 
-ComSession::~ComSession() {
+ComSession::~ComSession()
+{
     Clear();
     ATLASSERT(_CrtCheckMemory());
 }
 
-void ComSession::Clear() {
+void ComSession::Clear()
+{
     CoUninitialize();
 }
 
-void ComSession::ThrowIfError(HRESULT result, LPCWSTR pMessage) const {
+void ComSession::ThrowIfError(HRESULT result, LPCWSTR pMessage) const
+{
     if (FAILED(result)) {
         throw wexception(pMessage);
     }
@@ -146,7 +153,8 @@ void ComSession::ThrowIfError(HRESULT result, LPCWSTR pMessage) const {
 void ComSession::ThrowIfError(
                               HRESULT result,
                               IUnknown* pObjectWithError,
-                              REFIID IID_InterfaceWithError) const {
+                              REFIID IID_InterfaceWithError) const
+{
     if (FAILED(result)) {
         std::auto_ptr<std::wostringstream> msg(new std::wostringstream);
         DumpErrorInfo(msg.get(), pObjectWithError, IID_InterfaceWithError);

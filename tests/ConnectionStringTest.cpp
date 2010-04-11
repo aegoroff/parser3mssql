@@ -18,17 +18,21 @@ const char* c_pszStringWithCharsetLowerCase = "mssql://server=egoroff-home^;data
 const char* c_pszStringWithoutCharset = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes";
 const std::string c_oleString(c_pszStringWithoutCharset);
 
-ConnectionStringTest::ConnectionStringTest(void) {    
+ConnectionStringTest::ConnectionStringTest(void)
+{    
 }
 
-ConnectionStringTest::~ConnectionStringTest(void) {
+ConnectionStringTest::~ConnectionStringTest(void)
+{
 }
 
-TEST_F(ConnectionStringTest, Constructor) {
-  ConnectionString str(c_pszStringWithCharset);
+TEST_F(ConnectionStringTest, Constructor)
+{
+	ConnectionString str(c_pszStringWithCharset);
 }
 
-TEST_F(ConnectionStringTest, ParseWithCharset) {
+TEST_F(ConnectionStringTest, ParseWithCharset)
+{
     ConnectionString str(c_pszStringWithCharset);
     str.Parse();
     EXPECT_TRUE(str.ContainsCharset());
@@ -37,7 +41,8 @@ TEST_F(ConnectionStringTest, ParseWithCharset) {
     EXPECT_EQ(c_oleString, str.GetOleDBString());
 }
 
-TEST_F( ConnectionStringTest, ParseWithCharsetLowerCase ) {
+TEST_F(ConnectionStringTest, ParseWithCharsetLowerCase)
+{
     ConnectionString str(c_pszStringWithCharsetLowerCase);
     str.Parse();
     EXPECT_TRUE(str.ContainsCharset());
@@ -45,14 +50,16 @@ TEST_F( ConnectionStringTest, ParseWithCharsetLowerCase ) {
     EXPECT_EQ(charset, str.GetCharset());
 }
 
-TEST_F( ConnectionStringTest, ParseWithoutCharset ) {
+TEST_F(ConnectionStringTest, ParseWithoutCharset)
+{
     ConnectionString str(c_pszStringWithoutCharset);
     str.Parse();
     EXPECT_FALSE(str.ContainsCharset());
     EXPECT_EQ(c_oleString, str.GetOleDBString());
 }
 
-TEST_F( ConnectionStringTest, CopyCharset ) {
+TEST_F(ConnectionStringTest, CopyCharset)
+{
     ConnectionString str(c_pszStringWithCharset);
     str.Parse();
     EXPECT_TRUE(str.ContainsCharset());

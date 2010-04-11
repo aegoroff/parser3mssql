@@ -12,7 +12,8 @@
 #include "StdAfx.h"
 #include "Client.h"
 
-inline void Client::InitializeAndEstablishConnection() {
+inline void Client::InitializeAndEstablishConnection()
+{
     CDBPropSet dbinit(DBPROPSET_DBINIT);
     bool result = dbinit.AddProperty(
             DBPROP_INIT_PROVIDERSTRING,
@@ -26,34 +27,40 @@ inline void Client::InitializeAndEstablishConnection() {
 }
 
 Client::Client(const CStringW& connectionString)
-    : connectionString_(connectionString) {
+    : connectionString_(connectionString)
+{
     InitializeAndEstablishConnection();
 }
 
-Client::~Client() {
+Client::~Client()
+{
     session_.Close();
     ds_.Close();
 }
 
 void Client::ThrowIfError(
                           HRESULT result,
-                          const CCommand<CNoAccessor>& cmd) const {
+                          const CCommand<CNoAccessor>& cmd) const
+{
     ThrowIfError(result, cmd.m_spCommand, IID_ICommand);
 }
 
 void Client::ThrowIfError(
                           HRESULT result,
-                          const CCommand<CManualAccessor>& cmd) const {
+                          const CCommand<CManualAccessor>& cmd) const
+{
     ThrowIfError(result, cmd.m_spCommand, IID_ICommand);
 }
 
 void Client::ThrowIfError(
                           HRESULT result,
-                          const CCommand<CDynamicStringAccessorW>& cmd) const {
+                          const CCommand<CDynamicStringAccessorW>& cmd) const
+{
     ThrowIfError(result, cmd.m_spCommand, IID_ICommand);
 }
 
-long Client::ExecuteNonQuery(LPCWSTR pStatement) {
+long Client::ExecuteNonQuery(LPCWSTR pStatement)
+{
     CCommand<CNoAccessor> cmd;
     cmd.CreateCommand(session_);
     DBROWCOUNT affected;
@@ -73,7 +80,8 @@ void Client::ExecuteReader(
                            LPCWSTR pStatement,
                            CCommand<CManualAccessor>* pCmd,
                            const std::map<CStringW,
-                           CStringW>& rParameters) {
+                           CStringW>& rParameters)
+{
     HRESULT result = NULL;
     pCmd ->Create(session_, pStatement);
     pCmd ->Prepare();
@@ -104,13 +112,15 @@ void Client::ExecuteReader(
 
 void Client::ExecuteReader(
                            LPCWSTR pStatement,
-                           CCommand<CDynamicStringAccessorW>* pCmd) {
+                           CCommand<CDynamicStringAccessorW>* pCmd)
+{
     DBROWCOUNT affected;
     HRESULT result = pCmd ->Open(session_, pStatement, 0, &affected);
     ThrowIfError(result, *pCmd);
 };
 
-DBLENGTH Client::CalculateStringLength(DBTYPE type, DBLENGTH size) {
+DBLENGTH Client::CalculateStringLength(DBTYPE type, DBLENGTH size)
+{
     switch (type) {
         case DBTYPE_BOOL:           return 2;
         case DBTYPE_BYTES:          return size * 2;

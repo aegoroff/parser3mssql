@@ -27,87 +27,103 @@ QueryDecoratorTest::~QueryDecoratorTest(void)
 {
 }
 
-TEST_F(QueryDecoratorTest, SelectWithoutLimit) {
+TEST_F(QueryDecoratorTest, SelectWithoutLimit)
+{
     QueryDecorator decorator(c_pszSelect);
     EXPECT_STREQ(c_pszSelect, decorator.GetQuery());
 }
 
-TEST_F(QueryDecoratorTest, SelectWithoutLimitWithLeadingSpaces) {
+TEST_F(QueryDecoratorTest, SelectWithoutLimitWithLeadingSpaces)
+{
     QueryDecorator decorator(c_pszSelectWithLeadingSpaces);
     EXPECT_STREQ(c_pszSelect, decorator.GetQuery());
 }
 
-TEST_F(QueryDecoratorTest, IsSelect) {
+TEST_F(QueryDecoratorTest, IsSelect)
+{
     QueryDecorator decorator(c_pszSelect);
     EXPECT_TRUE(decorator.IsSelectQuery());
     EXPECT_FALSE(decorator.IsExecQuery());
 }
 
-TEST_F(QueryDecoratorTest, IsSelectWithLeadingSpaces) {
+TEST_F(QueryDecoratorTest, IsSelectWithLeadingSpaces)
+{
     QueryDecorator decorator(c_pszSelectWithLeadingSpaces);
     EXPECT_TRUE(decorator.IsSelectQuery());
     EXPECT_FALSE(decorator.IsExecQuery());
 }
 
-TEST_F(QueryDecoratorTest, SelectWithLimit) {
+TEST_F(QueryDecoratorTest, SelectWithLimit)
+{
     QueryDecorator decorator(c_pszSelect, 10, 0, true);
     EXPECT_STREQ(L"SELECT TOP 10 * from Table", decorator.GetQuery());
 }
 
-TEST_F(QueryDecoratorTest, SelectWithLimitAndOffset) {
+TEST_F(QueryDecoratorTest, SelectWithLimitAndOffset)
+{
     QueryDecorator decorator(c_pszSelect, 10, 10, true);
     EXPECT_STREQ(L"SELECT TOP 20 * from Table", decorator.GetQuery());
 }
 
-TEST_F(QueryDecoratorTest, SelectWithLimitAndLeadingSpaces) {
+TEST_F(QueryDecoratorTest, SelectWithLimitAndLeadingSpaces)
+{
     QueryDecorator decorator(c_pszSelectWithLeadingSpaces, 10, 0, true);
     EXPECT_STREQ(L"SELECT TOP 10 * from Table", decorator.GetQuery());
 }
 
-TEST_F(QueryDecoratorTest, SelectWithZeroLimitAndNonZeroOffset) {
+TEST_F(QueryDecoratorTest, SelectWithZeroLimitAndNonZeroOffset)
+{
     QueryDecorator decorator(c_pszSelect, 0, 10, true);
     EXPECT_STREQ(L"SELECT TOP 0 * from Table", decorator.GetQuery());
 }
 
-TEST_F(QueryDecoratorTest, ExecWithoutLimit) {
+TEST_F(QueryDecoratorTest, ExecWithoutLimit)
+{
     QueryDecorator decorator(c_pszExec);
     EXPECT_STREQ(c_pszExec, decorator.GetQuery());
 }
 
-TEST_F(QueryDecoratorTest, ExecWithoutLimitWithLeadingSpaces) {
+TEST_F(QueryDecoratorTest, ExecWithoutLimitWithLeadingSpaces)
+{
     QueryDecorator decorator(c_pszExecWithLeadingSpaces);
     EXPECT_STREQ(c_pszExec, decorator.GetQuery());
 }
 
-TEST_F(QueryDecoratorTest, IsExec) {
+TEST_F(QueryDecoratorTest, IsExec)
+{
     QueryDecorator decorator(c_pszExec);
     EXPECT_FALSE(decorator.IsSelectQuery());
     EXPECT_TRUE(decorator.IsExecQuery());
 }
 
-TEST_F(QueryDecoratorTest, IsExecWithLeadingSpaces) {
+TEST_F(QueryDecoratorTest, IsExecWithLeadingSpaces)
+{
     QueryDecorator decorator(c_pszExecWithLeadingSpaces);
     EXPECT_FALSE(decorator.IsSelectQuery());
     EXPECT_TRUE(decorator.IsExecQuery());
 }
 
-TEST_F(QueryDecoratorTest, ExecWithLimitAndOffset) {
+TEST_F(QueryDecoratorTest, ExecWithLimitAndOffset)
+{
     QueryDecorator decorator(c_pszExec, 10, 10, true);
     EXPECT_STREQ(c_pszExec, decorator.GetQuery());
 }
 
-TEST_F(QueryDecoratorTest, Delete) {
+TEST_F(QueryDecoratorTest, Delete)
+{
     QueryDecorator decorator(c_pszDelete);
     EXPECT_STREQ(c_pszDelete, decorator.GetQuery());
 }
 
-TEST_F(QueryDecoratorTest, IsNotExecAndNotSelect) {
+TEST_F(QueryDecoratorTest, IsNotExecAndNotSelect)
+{
     QueryDecorator decorator(c_pszDelete);
     EXPECT_FALSE(decorator.IsSelectQuery());
     EXPECT_FALSE(decorator.IsExecQuery());
 }
 
-TEST_F(QueryDecoratorTest, DeleteWithLimitAndOffset) {
+TEST_F(QueryDecoratorTest, DeleteWithLimitAndOffset)
+{
     QueryDecorator decorator(c_pszDelete, 10, 10, true);
     EXPECT_STREQ(c_pszDelete, decorator.GetQuery());
 }

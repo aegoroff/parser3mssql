@@ -26,7 +26,8 @@ static const int maxTopLength = 16;
 inline bool AreStrEqual(
                         __in LPCWSTR lpString1,
                         __in LPCWSTR lpString2,
-                        int cchCount) {
+                        int cchCount)
+{
     return ::CompareStringW(
         LOCALE_INVARIANT,
         NORM_IGNORECASE,
@@ -42,7 +43,8 @@ QueryDecorator::QueryDecorator(
                                unsigned long offset,
                                bool isLimit)
 :    pOriginalQuery_(pOriginalQuery),
-    isLimit_(isLimit) {
+    isLimit_(isLimit)
+{
     while(iswspace(static_cast<WCHAR>(*pOriginalQuery_))) {
         ++pOriginalQuery_;
     }
@@ -67,18 +69,21 @@ QueryDecorator::QueryDecorator(
         pOriginalQuery_);
 }
 
-QueryDecorator::~QueryDecorator(void) {
+QueryDecorator::~QueryDecorator(void)
+{
 }
 
-LPCWSTR QueryDecorator::GetQuery(void) const {
+LPCWSTR QueryDecorator::GetQuery(void) const
+{
     return isLimit_ && isSelectQuery_ ? pDecoratedQuery_.get() : pOriginalQuery_;
 }
 
-bool QueryDecorator::IsSelectQuery(void) const {
+bool QueryDecorator::IsSelectQuery(void) const
+{
     return isSelectQuery_;
 }
 
-bool QueryDecorator::IsExecQuery(void) const {
+bool QueryDecorator::IsExecQuery(void) const
+{
     return isExecQuery_;
 }
-

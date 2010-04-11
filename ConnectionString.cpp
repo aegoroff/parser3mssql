@@ -16,13 +16,16 @@
 const char* pPattern = "CLIENTCHARSET=";
 
 ConnectionString::ConnectionString(const char* pRawString)
-    : cnString_(pRawString), containsCharset_(false) {
+    : cnString_(pRawString), containsCharset_(false)
+{
 }
 
-ConnectionString::~ConnectionString(void) {
+ConnectionString::~ConnectionString(void)
+{
 }
 
-void ConnectionString::Parse() {
+void ConnectionString::Parse()
+{
     std::string::size_type ixQ = cnString_.find("?");
     if (ixQ == std::string::npos) {
         oleDBString_ = cnString_;
@@ -37,26 +40,30 @@ void ConnectionString::Parse() {
     }
 }
 
-bool ConnectionString::ContainsCharset() const {
+bool ConnectionString::ContainsCharset() const
+{
     return containsCharset_;
 }
 
-const std::string& ConnectionString::GetCharset() const {
+const std::string& ConnectionString::GetCharset() const
+{
     return charset_;
 }
 
 void ConnectionString::CopyCharset(
                                    char* pDestination,
-                                   std::string::size_type destLength) const {
+                                   std::string::size_type destLength) const
+{
     charset_._Copy_s(pDestination, destLength, charset_.length());
     pDestination[charset_.length()] = 0;
 }
 
-size_t ConnectionString::CharsetLength() const {
+size_t ConnectionString::CharsetLength() const
+{
     return charset_.length() + 1;
 }
 
-const std::string& ConnectionString::GetOleDBString() const {
+const std::string& ConnectionString::GetOleDBString() const
+{
     return oleDBString_;
 }
-
