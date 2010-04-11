@@ -58,6 +58,7 @@
 			Username="$(FtpLogin)"
 			Password="$(FtpPassword)"
 			Condition=" '$(IsUpload)'=='true' "
+			UsePassive = 'true'
 		/>
 		<Message Text="parser3mssql Build Complete"/>
 	</Target>
