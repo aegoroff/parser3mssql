@@ -3,7 +3,7 @@
 class ConnectionStringTest : public testing::Test
 {
 public:
-	ConnectionStringTest(void);
-	virtual ~ConnectionStringTest(void);
+    ConnectionStringTest(void);
+    virtual ~ConnectionStringTest(void);
 };
 

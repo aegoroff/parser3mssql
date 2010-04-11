@@ -3,6 +3,6 @@
 class WExceptionTest : public testing::Test
 {
 public:
-	WExceptionTest(void);
-	virtual ~WExceptionTest(void);
+    WExceptionTest(void);
+    virtual ~WExceptionTest(void);
 };

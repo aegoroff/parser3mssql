@@ -11,7 +11,7 @@ const char* c_pszStringWithCharsetLowerCase = "mssql://server=egoroff-home^;data
 const char* c_pszStringWithoutCharset = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes";
 const std::string c_oleString(c_pszStringWithoutCharset);
 
-ConnectionStringTest::ConnectionStringTest(void) {	
+ConnectionStringTest::ConnectionStringTest(void) {    
 }
 
 ConnectionStringTest::~ConnectionStringTest(void) {
@@ -22,37 +22,37 @@ TEST_F(ConnectionStringTest, Constructor) {
 }
 
 TEST_F(ConnectionStringTest, ParseWithCharset) {
-	ConnectionString str(c_pszStringWithCharset);
-	str.Parse();
-	EXPECT_TRUE(str.ContainsCharset());
-	std::string charset("WINDOWS-1251");
-	EXPECT_EQ(charset, str.GetCharset());
-	EXPECT_EQ(c_oleString, str.GetOleDBString());
+    ConnectionString str(c_pszStringWithCharset);
+    str.Parse();
+    EXPECT_TRUE(str.ContainsCharset());
+    std::string charset("WINDOWS-1251");
+    EXPECT_EQ(charset, str.GetCharset());
+    EXPECT_EQ(c_oleString, str.GetOleDBString());
 }
 
 TEST_F( ConnectionStringTest, ParseWithCharsetLowerCase ) {
-	ConnectionString str(c_pszStringWithCharsetLowerCase);
-	str.Parse();
-	EXPECT_TRUE(str.ContainsCharset());
-	std::string charset("WINDOWS-1251");
-	EXPECT_EQ(charset, str.GetCharset());
+    ConnectionString str(c_pszStringWithCharsetLowerCase);
+    str.Parse();
+    EXPECT_TRUE(str.ContainsCharset());
+    std::string charset("WINDOWS-1251");
+    EXPECT_EQ(charset, str.GetCharset());
 }
 
 TEST_F( ConnectionStringTest, ParseWithoutCharset ) {
-	ConnectionString str(c_pszStringWithoutCharset);
-	str.Parse();
-	EXPECT_FALSE(str.ContainsCharset());
-	EXPECT_EQ(c_oleString, str.GetOleDBString());
+    ConnectionString str(c_pszStringWithoutCharset);
+    str.Parse();
+    EXPECT_FALSE(str.ContainsCharset());
+    EXPECT_EQ(c_oleString, str.GetOleDBString());
 }
 
 TEST_F( ConnectionStringTest, CopyCharset ) {
-	ConnectionString str(c_pszStringWithCharset);
-	str.Parse();
-	EXPECT_TRUE(str.ContainsCharset());
-	std::string charset("WINDOWS-1251");
-	EXPECT_EQ(charset, str.GetCharset());
-	char* pCharset = new char[str.CharsetLength()];
-	str.CopyCharset(pCharset, str.CharsetLength());
-	EXPECT_STREQ("WINDOWS-1251", pCharset);
-	delete [] pCharset;
+    ConnectionString str(c_pszStringWithCharset);
+    str.Parse();
+    EXPECT_TRUE(str.ContainsCharset());
+    std::string charset("WINDOWS-1251");
+    EXPECT_EQ(charset, str.GetCharset());
+    char* pCharset = new char[str.CharsetLength()];
+    str.CopyCharset(pCharset, str.CharsetLength());
+    EXPECT_STREQ("WINDOWS-1251", pCharset);
+    delete [] pCharset;
 }

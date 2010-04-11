@@ -3,6 +3,6 @@
 class QueryDecoratorTest : public testing::Test
 {
 public:
-	QueryDecoratorTest(void);
-	virtual ~QueryDecoratorTest(void);
+    QueryDecoratorTest(void);
+    virtual ~QueryDecoratorTest(void);
 };
