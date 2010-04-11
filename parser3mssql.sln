@@ -1,0 +1,31 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "parser3mssql", "parser3mssql.vcproj", "{C73FBF80-B11D-46DA-B038-ACE75CE71D2B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\tests.vcproj", "{96A4F201-A1ED-4FBC-93C8-B0E278BFD5EE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C73FBF80-B11D-46DA-B038-ACE75CE71D2B} = {C73FBF80-B11D-46DA-B038-ACE75CE71D2B}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C73FBF80-B11D-46DA-B038-ACE75CE71D2B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C73FBF80-B11D-46DA-B038-ACE75CE71D2B}.Debug|Win32.Build.0 = Debug|Win32
+		{C73FBF80-B11D-46DA-B038-ACE75CE71D2B}.Release|Win32.ActiveCfg = Release|Win32
+		{C73FBF80-B11D-46DA-B038-ACE75CE71D2B}.Release|Win32.Build.0 = Release|Win32
+		{96A4F201-A1ED-4FBC-93C8-B0E278BFD5EE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{96A4F201-A1ED-4FBC-93C8-B0E278BFD5EE}.Debug|Win32.Build.0 = Debug|Win32
+		{96A4F201-A1ED-4FBC-93C8-B0E278BFD5EE}.Release|Win32.ActiveCfg = Release|Win32
+		{96A4F201-A1ED-4FBC-93C8-B0E278BFD5EE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = 
+	EndGlobalSection
+EndGlobal
