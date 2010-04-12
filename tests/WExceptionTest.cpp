@@ -15,7 +15,7 @@
 
 using namespace std;
 
-const wchar_t* c_pwszMessage = L"An exception occured";
+const wchar_t* kMessage = L"An exception occured";
 
 WExceptionTest::WExceptionTest(void) 
 {
@@ -33,30 +33,30 @@ TEST_F(WExceptionTest, DefaultConstructor)
 
 TEST_F(WExceptionTest, StringConstructor)
 {
-    wstring* pMessage = new wstring(c_pwszMessage);
+    wstring* pMessage = new wstring(kMessage);
     wexception exc(pMessage);
-    EXPECT_STREQ(c_pwszMessage, exc.GetMessage()->c_str());
+    EXPECT_STREQ(kMessage, exc.GetMessage()->c_str());
 }
 
 TEST_F(WExceptionTest, StreamConstructor)
 {
     wostringstream* pMessageStream = new wostringstream;
-    *pMessageStream << c_pwszMessage;
+    *pMessageStream << kMessage;
     wexception exc(pMessageStream);
-    EXPECT_STREQ(c_pwszMessage, exc.GetMessage()->c_str());
+    EXPECT_STREQ(kMessage, exc.GetMessage()->c_str());
 }
 
 TEST_F(WExceptionTest, CopyConstructor)
 {
-    wexception exc(c_pwszMessage);
+    wexception exc(kMessage);
     wexception excCopy(exc);
-    EXPECT_STREQ(c_pwszMessage, excCopy.GetMessage()->c_str());
+    EXPECT_STREQ(kMessage, excCopy.GetMessage()->c_str());
 }
 
 TEST_F(WExceptionTest, AssignOperator)
 {
-    wexception exc(c_pwszMessage);
+    wexception exc(kMessage);
     wexception excCopy;
     excCopy = exc;
-    EXPECT_STREQ(c_pwszMessage, excCopy.GetMessage()->c_str());
+    EXPECT_STREQ(kMessage, excCopy.GetMessage()->c_str());
 }

@@ -12,10 +12,10 @@
 #include "StdAfx.h"
 #include "QueryDecorator.h"
 
-static const int selectLength = 6;
-static const int execLength = 4;
-static const int selectTopLength = 11;
-static const int maxTopLength = 16;
+static const int kSelectLength = 6;
+static const int kExecLength = 4;
+static const int kSelectTopLength = 11;
+static const int kMaxTopLength = 16;
 
 /**
 * \brief Compares two strings and retuns true if they are equal false otherwise.
@@ -48,18 +48,18 @@ QueryDecorator::QueryDecorator(
     while(iswspace(static_cast<WCHAR>(*pOriginalQuery_))) {
         ++pOriginalQuery_;
     }
-    isSelectQuery_ = AreStrEqual(pOriginalQuery_, L"select", selectLength);
-    isExecQuery_ = AreStrEqual(pOriginalQuery_, L"EXEC", execLength);
+    isSelectQuery_ = AreStrEqual(pOriginalQuery_, L"select", kSelectLength);
+    isExecQuery_ = AreStrEqual(pOriginalQuery_, L"EXEC", kExecLength);
     if (!isLimit || !isSelectQuery_) {
         return;
     }
     if (limit == 0) {
         offset = 0;
     }
-    pOriginalQuery_ += selectLength;
+    pOriginalQuery_ += kSelectLength;
     // trailing zero included
     size_t nBuffer =
-        selectTopLength + maxTopLength + wcslen(pOriginalQuery_) + 1;
+        kSelectTopLength + kMaxTopLength + wcslen(pOriginalQuery_) + 1;
     pDecoratedQuery_ = std::auto_ptr<wchar_t>(new wchar_t[nBuffer]);
     swprintf_s(
         pDecoratedQuery_.get(),

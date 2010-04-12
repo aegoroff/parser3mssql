@@ -44,8 +44,8 @@ inline void SqlNativeDriver::ValidateColumns(ULONG* pColumnsCount, SQL_Driver_se
     if(!(*pColumnsCount)) {
         rServices._throw("result contains no columns");
     }
-    if(*pColumnsCount > maxColumnsCount) {
-        *pColumnsCount = maxColumnsCount;
+    if(*pColumnsCount > kMaxColumnsCount) {
+        *pColumnsCount = kMaxColumnsCount;
     }
 }
 

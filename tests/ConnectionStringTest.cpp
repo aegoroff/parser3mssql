@@ -13,10 +13,10 @@
 #include "..\ConnectionString.h"
 #include "ConnectionStringTest.h"
 
-const char* c_pszStringWithCharset = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes?ClientCharset=windows-1251";
-const char* c_pszStringWithCharsetLowerCase = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes?clientcharset=windows-1251";
-const char* c_pszStringWithoutCharset = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes";
-const std::string c_oleString(c_pszStringWithoutCharset);
+const char* kStringWithCharset = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes?ClientCharset=windows-1251";
+const char* kStringWithCharsetLowerCase = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes?clientcharset=windows-1251";
+const char* kStringWithoutCharset = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes";
+const std::string kOleString(kStringWithoutCharset);
 
 ConnectionStringTest::ConnectionStringTest(void)
 {    
@@ -28,22 +28,22 @@ ConnectionStringTest::~ConnectionStringTest(void)
 
 TEST_F(ConnectionStringTest, Constructor)
 {
-	ConnectionString str(c_pszStringWithCharset);
+	ConnectionString str(kStringWithCharset);
 }
 
 TEST_F(ConnectionStringTest, ParseWithCharset)
 {
-    ConnectionString str(c_pszStringWithCharset);
+    ConnectionString str(kStringWithCharset);
     str.Parse();
     EXPECT_TRUE(str.ContainsCharset());
     std::string charset("WINDOWS-1251");
     EXPECT_EQ(charset, str.GetCharset());
-    EXPECT_EQ(c_oleString, str.GetOleDBString());
+    EXPECT_EQ(kOleString, str.GetOleDBString());
 }
 
 TEST_F(ConnectionStringTest, ParseWithCharsetLowerCase)
 {
-    ConnectionString str(c_pszStringWithCharsetLowerCase);
+    ConnectionString str(kStringWithCharsetLowerCase);
     str.Parse();
     EXPECT_TRUE(str.ContainsCharset());
     std::string charset("WINDOWS-1251");
@@ -52,15 +52,15 @@ TEST_F(ConnectionStringTest, ParseWithCharsetLowerCase)
 
 TEST_F(ConnectionStringTest, ParseWithoutCharset)
 {
-    ConnectionString str(c_pszStringWithoutCharset);
+    ConnectionString str(kStringWithoutCharset);
     str.Parse();
     EXPECT_FALSE(str.ContainsCharset());
-    EXPECT_EQ(c_oleString, str.GetOleDBString());
+    EXPECT_EQ(kOleString, str.GetOleDBString());
 }
 
 TEST_F(ConnectionStringTest, CopyCharset)
 {
-    ConnectionString str(c_pszStringWithCharset);
+    ConnectionString str(kStringWithCharset);
     str.Parse();
     EXPECT_TRUE(str.ContainsCharset());
     std::string charset("WINDOWS-1251");

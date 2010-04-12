@@ -13,7 +13,7 @@
 #include <algorithm>
 #include "ConnectionString.h"
 
-const char* pPattern = "CLIENTCHARSET=";
+const char* kCharsetPattern = "CLIENTCHARSET=";
 
 ConnectionString::ConnectionString(const char* pRawString)
     : cnString_(pRawString), containsCharset_(false)
@@ -33,10 +33,10 @@ void ConnectionString::Parse()
     }
     oleDBString_ = cnString_.substr(0, ixQ);
     std::transform(cnString_.begin(), cnString_.end(), cnString_.begin(), toupper);
-    std::string::size_type ix = cnString_.find(pPattern);
+    std::string::size_type ix = cnString_.find(kCharsetPattern);
     containsCharset_ = ix != std::string::npos;
     if (containsCharset_) {
-        charset_ = cnString_.substr(ix + strlen(pPattern));
+        charset_ = cnString_.substr(ix + strlen(kCharsetPattern));
     }
 }
 

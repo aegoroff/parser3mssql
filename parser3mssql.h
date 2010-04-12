@@ -23,7 +23,7 @@ struct Connection {
     Client* pClient;
 };
 
-const DBORDINAL maxColumnsCount = 500;
+const DBORDINAL kMaxColumnsCount = 500;
 
 struct ColumnBind {
     ColumnBind() {
