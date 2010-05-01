@@ -170,14 +170,16 @@ class SqlNativeDriver : public SQL_Driver {
 };
 
 template<>
-LPWSTR SqlNativeDriver::ReadValue(int i, ColumnBind* pBind) {
+LPWSTR SqlNativeDriver::ReadValue(int i, ColumnBind* pBind)
+{
     return pBind[i-1].szValue;
 }
 
 template<>
 LPWSTR SqlNativeDriver::ReadValue(
                                   int i,
-                                  CCommand<CDynamicStringAccessorW>* pCmd) {
+                                  CCommand<CDynamicStringAccessorW>* pCmd)
+{
     return pCmd ->GetString(i);
 }
 
@@ -189,7 +191,8 @@ void SqlNativeDriver::ReadResults(
     unsigned long offset,
     unsigned long limit,
     ULONG nColumns,
-    TColumnSource src) {
+    TColumnSource src)
+{
     SQL_Error sqlError;
     HRESULT result = NULL;
     SQL_Driver_services& rServices = *rConnection.services;
@@ -211,7 +214,8 @@ void SqlNativeDriver::ReadResults(
     }
 }
 
-extern "C" SQL_Driver *SQL_DRIVER_CREATE() {
+extern "C" SQL_Driver *SQL_DRIVER_CREATE()
+{
     return new SqlNativeDriver();
 }
 
