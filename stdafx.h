@@ -51,7 +51,9 @@
 #endif
 
 #include <sqlncli.h>
+#pragma warning( disable : 6387 )
 #include <atldbcli.h>
+#pragma warning (pop)
 #include <atldbsch.h>  // For Rowset Schema Information
 
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
