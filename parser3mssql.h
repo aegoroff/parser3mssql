@@ -218,4 +218,3 @@ extern "C" SQL_Driver *SQL_DRIVER_CREATE()
 {
     return new SqlNativeDriver();
 }
-
