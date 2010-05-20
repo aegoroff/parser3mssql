@@ -41,7 +41,7 @@ inline void WriteErrorMessage(
 inline void ComSession::DumpErrorInfo(
                                       std::wostream* pOstr,
                                       IUnknown* pObjectWithError,
-                                      REFIID IID_InterfaceWithError) const
+                                      REFIID rErrorInterface) const
 {
     // Interfaces used in the example.
     CComPtr<IErrorInfo> pIErrorInfoAll;
@@ -54,7 +54,7 @@ inline void ComSession::DumpErrorInfo(
         *pOstr << L"SupportErrorErrorInfo interface not supported" << std::endl;
         return;
     }
-    if (FAILED(pISupportErrorInfo-> InterfaceSupportsErrorInfo(IID_InterfaceWithError))) {
+    if (FAILED(pISupportErrorInfo-> InterfaceSupportsErrorInfo(rErrorInterface))) {
         *pOstr << L"InterfaceWithError interface not supported" << std::endl;
         return;
     }
@@ -121,9 +121,9 @@ inline void ComSession::DumpErrorInfo(
 // status or error information.
 inline void ComSession::DumpErrorInfo(
                                       IUnknown* pObjectWithError,
-                                      REFIID IID_InterfaceWithError) const
+                                      REFIID rErrorInterface) const
 {
-    DumpErrorInfo(&std::wcout, pObjectWithError, IID_InterfaceWithError);
+    DumpErrorInfo(&std::wcout, pObjectWithError, rErrorInterface);
 }
 
 ComSession::ComSession()
@@ -153,11 +153,11 @@ void ComSession::ThrowIfError(HRESULT result, LPCWSTR pMessage) const
 void ComSession::ThrowIfError(
                               HRESULT result,
                               IUnknown* pObjectWithError,
-                              REFIID IID_InterfaceWithError) const
+                              REFIID rErrorInterface) const
 {
     if (FAILED(result)) {
         std::auto_ptr<std::wostringstream> msg(new std::wostringstream);
-        DumpErrorInfo(msg.get(), pObjectWithError, IID_InterfaceWithError);
+        DumpErrorInfo(msg.get(), pObjectWithError, rErrorInterface);
         throw wexception(msg ->str().c_str());
     }
 }

@@ -43,12 +43,12 @@ class ComSession {
         * \brief Checks HRESULT and throws exception in case of an error (bad HRESULT)
         * @param result HRESULT to check
         * @param pObjectWithError Checked object
-        * @param IID_InterfaceWithError Checked object's interface
+        * @param rErrorInterface Checked object's interface
         */
         void ThrowIfError(
             HRESULT result,
             __in IUnknown* pObjectWithError,
-            REFIID IID_InterfaceWithError) const;
+            REFIID rErrorInterface) const;
  private:
     void DumpErrorInfo(IUnknown*, REFIID) const;
 
