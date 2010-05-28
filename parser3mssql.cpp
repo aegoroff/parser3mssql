@@ -7,7 +7,7 @@
             Creation date: 2010-04-11
             \endverbatim
  * Copyright 2008-2009 Alexander Egorov <egoroff@gmail.com> (http://www.egoroff.spb.ru)
-*/
+ */
 
 #include "StdAfx.h"
 #include "parser3mssql.h"
@@ -20,18 +20,18 @@ inline static bool IsNoLimit(unsigned long limit)
 }
 
 inline void SqlNativeDriver::_throw(
-                                    SQL_Driver_services& rServices,
-                                    const std::exception& e) const
+    SQL_Driver_services&  rServices,
+    const std::exception& e) const
 {
     rServices._throw(e.what());
 }
 
 inline void SqlNativeDriver::ThrowIfError(
     SQL_Driver_services& rServices,
-    bool isFailure) const
+    bool                 isFailure) const
 {
     SQL_Error sqlError;
-    if(isFailure) {
+    if (isFailure) {
         rServices._throw(sqlError);
     }
 }
@@ -41,10 +41,10 @@ inline void SqlNativeDriver::ValidateColumns(ULONG* pColumnsCount, SQL_Driver_se
     if (pColumnsCount == NULL) {
         rServices._throw("null column number pointer");
     }
-    if(!(*pColumnsCount)) {
+    if (! (*pColumnsCount)) {
         rServices._throw("result contains no columns");
     }
-    if(*pColumnsCount > kMaxColumnsCount) {
+    if (*pColumnsCount > kMaxColumnsCount) {
         *pColumnsCount = kMaxColumnsCount;
     }
 }
@@ -66,11 +66,11 @@ const char* SqlNativeDriver::initialize(char* p)
     @param pConnString
         format: @b server=<server>;database=<database>;Trusted_Connection=Yes (MSSQL connect string)
         WARNING: must be used only to connect, for buffer doesn't live long
-*/
+ */
 void SqlNativeDriver::connect(
-                              char* pConnString,
-                              SQL_Driver_services& rServices,
-                              void** pConnection)
+    char*                pConnString,
+    SQL_Driver_services& rServices,
+    void**               pConnection)
 {
     Connection& rConnection = *static_cast<Connection*>(rServices.malloc(sizeof(Connection)));
     *pConnection = &rConnection;
@@ -84,8 +84,7 @@ void SqlNativeDriver::connect(
 
     try {
         rConnection.pClient = new Client(CStringW(str.GetOleDBString().c_str()));
-    }
-    catch(const std::exception& e) {
+    } catch (const std::exception& e)    {
         _throw(rServices, e);
     }
 }
@@ -96,8 +95,7 @@ void SqlNativeDriver::disconnect(void* pConnection)
     try {
         delete rConnection.pClient;
         rConnection.pClient = NULL;
-    }
-    catch(const std::exception&) {
+    } catch (const std::exception&) {
         // do nothing
     }
 }
@@ -121,15 +119,15 @@ bool SqlNativeDriver::ping(void* p)
 }
 
 const char* SqlNativeDriver::quote(
-                                   void* pConnection,
-                                   const char* from,
-                                   unsigned int length)
+    void*        pConnection,
+    const char*  from,
+    unsigned int length)
 {
     Connection& rConnection = *static_cast<Connection*>(pConnection);
-    char* result = static_cast<char*>(rConnection.services->malloc_atomic(length*2+1));
+    char* result = static_cast<char*>(rConnection.services->malloc_atomic(length * 2 + 1));
     char* to = result;
-    while(length--) {
-        if(*from == '\'') {  // ' -> ''
+    while (length--) {
+        if (*from == '\'') {  // ' -> ''
             *to++='\'';
         }
         *to++=*from++;
@@ -139,25 +137,25 @@ const char* SqlNativeDriver::quote(
 }
 
 void SqlNativeDriver::InsertColumnValue(
-    const CStringA& rMultibyteStr,
-    Connection& rConnection,
+    const CStringA&                  rMultibyteStr,
+    Connection&                      rConnection,
     SQL_Driver_query_event_handlers& rHandlers,
-    SQL_Error& rSqlError)
+    SQL_Error&                       rSqlError)
 {
     size_t length = rMultibyteStr.GetLength();
 
-    char* pStr = static_cast<char*>(rConnection.services -> malloc_atomic(length+1));
-    strcpy_s(pStr, length+1, rMultibyteStr);
+    char* pStr = static_cast<char*>(rConnection.services->malloc_atomic(length + 1));
+    strcpy_s(pStr, length + 1, rMultibyteStr);
     ThrowIfError(*rConnection.services, rHandlers.add_row_cell(rSqlError, pStr, length));
 }
 
 void SqlNativeDriver::query(
-    void* pConnection,
-    const char* pStatement,
-    size_t nPlaceholders,
-    Placeholder* pPlaceholders,
-    unsigned long offset,
-    unsigned long limit,
+    void*                            pConnection,
+    const char*                      pStatement,
+    size_t                           nPlaceholders,
+    Placeholder*                     pPlaceholders,
+    unsigned long                    offset,
+    unsigned long                    limit,
     SQL_Driver_query_event_handlers& rHandlers)
 {
     Connection& rConnection = *static_cast<Connection*>(pConnection);
@@ -167,47 +165,45 @@ void SqlNativeDriver::query(
     CStringW sql = CA2W(pStatement, codePage_);
 
     LPCWSTR pSql = sql.GetString();
-    QueryDecorator decorator(pSql, limit, offset, !IsNoLimit(limit));
+    QueryDecorator decorator(pSql, limit, offset, ! IsNoLimit(limit));
 
     try {
         // Server cursors are created only for statements that begin with
         // SELECT
         // EXEC[ute] procedure_name
-        if(!decorator.IsSelectQuery() && !decorator.IsExecQuery()) {
+        if (! decorator.IsSelectQuery() && ! decorator.IsExecQuery()) {
             pClient->ExecuteNonQuery(sql);
             return;
         }
-        if(nPlaceholders > 0) {
+        if (nPlaceholders > 0) {
             ExecuteReader(decorator, rConnection, rHandlers, offset, limit, nPlaceholders, pPlaceholders);
         } else {
             ExecuteReader(decorator, rConnection, rHandlers, offset, limit);
         }
-    }
-    catch(const wexception& e) {
+    } catch (const wexception& e) {
         rServices._throw(CW2A(e.GetMessage()->c_str(), codePage_));
-    }
-    catch(const std::exception& e) {
+    } catch (const std::exception& e) {
         _throw(rServices, e);
     }
 }
 
 void SqlNativeDriver::ExecuteReader(
-        const QueryDecorator& decorator,
-        Connection& rConnection,
-        SQL_Driver_query_event_handlers& rHandlers,
-        unsigned long offset,
-        unsigned long limit)
+    const QueryDecorator&            decorator,
+    Connection&                      rConnection,
+    SQL_Driver_query_event_handlers& rHandlers,
+    unsigned long                    offset,
+    unsigned long                    limit)
 {
     Client* pClient = rConnection.pClient;
     SQL_Driver_services& rServices = *rConnection.services;
 
     CCommand<CDynamicStringAccessorW> cmd;
-    pClient -> ExecuteReader(decorator.GetQuery(), &cmd);
+    pClient->ExecuteReader(decorator.GetQuery(), &cmd);
     cmd.MoveFirst();
     DBORDINAL nColumns = cmd.GetColumnCount();
     ValidateColumns(&nColumns, rServices);
     SQL_Error sqlError;
-    for(DBORDINAL i = 1; i <= nColumns; ++i) {
+    for (DBORDINAL i = 1; i <= nColumns; ++i) {
         CStringW name(cmd.GetColumnName(i));
         InsertColumn(name, rConnection, rHandlers, sqlError);
     }
@@ -215,13 +211,13 @@ void SqlNativeDriver::ExecuteReader(
 }
 
 void SqlNativeDriver::ExecuteReader(
-        const QueryDecorator& decorator,
-        Connection& rConnection,
-        SQL_Driver_query_event_handlers& rHandlers,
-        unsigned long offset,
-        unsigned long limit,
-        size_t nPlaceholders,
-        Placeholder* pPlaceholders)
+    const QueryDecorator&            decorator,
+    Connection&                      rConnection,
+    SQL_Driver_query_event_handlers& rHandlers,
+    unsigned long                    offset,
+    unsigned long                    limit,
+    size_t                           nPlaceholders,
+    Placeholder*                     pPlaceholders)
 {
     Client* pClient = rConnection.pClient;
     SQL_Driver_services& rServices = *rConnection.services;
@@ -229,14 +225,14 @@ void SqlNativeDriver::ExecuteReader(
     CCommand<CManualAccessor> cmd;
 
     std::map<CStringW, CStringW> parameters;
-    for(size_t i = 0; i < nPlaceholders; ++i) {
+    for (size_t i = 0; i < nPlaceholders; ++i) {
         Placeholder& ph = pPlaceholders[i];
         CStringW sName = CA2W(ph.name, codePage_);
         CStringW sValue = CA2W(ph.value, codePage_);
         parameters[sName] = sValue;
     }
 
-    pClient -> ExecuteReader(decorator.GetQuery(), &cmd, parameters);
+    pClient->ExecuteReader(decorator.GetQuery(), &cmd, parameters);
 
     HRESULT result = NULL;
 
@@ -247,7 +243,7 @@ void SqlNativeDriver::ExecuteReader(
     result = cmd.GetColumnInfo(&nColumns, &pColumnInfo, &pStrings);
 
     ColumnBind* pBind = static_cast<ColumnBind*>(
-        rConnection.services -> malloc_atomic(sizeof(ColumnBind) * nColumns));
+        rConnection.services->malloc_atomic(sizeof(ColumnBind) * nColumns));
     result = cmd.CreateAccessor(nColumns, &pBind[0], sizeof(ColumnBind) * nColumns);
 
     ValidateColumns(&nColumns, rServices);
@@ -256,8 +252,8 @@ void SqlNativeDriver::ExecuteReader(
     for (ULONG l = 0; l < nColumns; ++l) {
         DBLENGTH sz = Client::CalculateStringLength(pColumnInfo[l].wType, pColumnInfo[l].ulColumnSize) + 1;
         pBind[l].nSize = sz;
-        pBind[l].szValue = static_cast<LPWSTR>(rConnection.services -> malloc_atomic(sizeof(WCHAR) * sz));
-        cmd.AddBindEntry(l+1, DBTYPE_WSTR, sizeof(WCHAR) * sz, pBind[l].szValue, NULL, &pBind[l].dwStatus);
+        pBind[l].szValue = static_cast<LPWSTR>(rConnection.services->malloc_atomic(sizeof(WCHAR) * sz));
+        cmd.AddBindEntry(l + 1, DBTYPE_WSTR, sizeof(WCHAR) * sz, pBind[l].szValue, NULL, &pBind[l].dwStatus);
 
         CStringW name(pColumnInfo[l].pwszName);
         InsertColumn(name, rConnection, rHandlers, sqlError);
@@ -269,17 +265,17 @@ void SqlNativeDriver::ExecuteReader(
 }
 
 void SqlNativeDriver::InsertColumn(
-        const CStringW& rUnicodeStr,
-        Connection& rConnection,
-        SQL_Driver_query_event_handlers& rHandlers,
-        SQL_Error& rSqlError
-    )
+    const CStringW&                  rUnicodeStr,
+    Connection&                      rConnection,
+    SQL_Driver_query_event_handlers& rHandlers,
+    SQL_Error&                       rSqlError
+                                  )
 {
-    char *pStr = 0;
+    char* pStr = 0;
     size_t length = rUnicodeStr.GetLength();
-    if(length) {
-        pStr = static_cast<char*>(rConnection.services -> malloc_atomic(length+1));
-        strcpy_s(pStr, length+1, CW2A(rUnicodeStr, codePage_));
+    if (length) {
+        pStr = static_cast<char*>(rConnection.services->malloc_atomic(length + 1));
+        strcpy_s(pStr, length + 1, CW2A(rUnicodeStr, codePage_));
     }
     ThrowIfError(*rConnection.services, rHandlers.add_column(rSqlError, pStr, length));
 }

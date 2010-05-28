@@ -7,7 +7,7 @@
             Creation date: 2010-04-11
             \endverbatim
  * Copyright 2008-2009 Alexander Egorov <egoroff@gmail.com> (http://www.egoroff.spb.ru)
-*/
+ */
 
 #include "StdAfx.h"
 #include "QueryDecorator.h"
@@ -18,39 +18,39 @@ static const int kSelectTopLength = 11;
 static const int kMaxTopLength = 16;
 
 /**
-* \brief Compares two strings and retuns true if they are equal false otherwise.
-* @param lpString1 the first string to compare
-* @param lpString2 the second string to compare
-* @param cchCount the second string length
-*/
+ * \brief Compares two strings and retuns true if they are equal false otherwise.
+ * @param lpString1 the first string to compare
+ * @param lpString2 the second string to compare
+ * @param cchCount the second string length
+ */
 inline bool AreStrEqual(
-                        __in LPCWSTR lpString1,
-                        __in LPCWSTR lpString2,
-                        int cchCount)
+    __in LPCWSTR lpString1,
+    __in LPCWSTR lpString2,
+    int          cchCount)
 {
     return ::CompareStringW(
-        LOCALE_INVARIANT,
-        NORM_IGNORECASE,
-        lpString1,
-        cchCount,
-        lpString2,
-        cchCount) == CSTR_EQUAL;
+               LOCALE_INVARIANT,
+               NORM_IGNORECASE,
+               lpString1,
+               cchCount,
+               lpString2,
+               cchCount) == CSTR_EQUAL;
 }
 
 QueryDecorator::QueryDecorator(
-                               LPCWSTR pOriginalQuery,
-                               unsigned long limit,
-                               unsigned long offset,
-                               bool isLimit)
-:    pOriginalQuery_(pOriginalQuery),
-    isLimit_(isLimit)
+    LPCWSTR       pOriginalQuery,
+    unsigned long limit,
+    unsigned long offset,
+    bool          isLimit)
+    :    pOriginalQuery_(pOriginalQuery)
+    , isLimit_(isLimit)
 {
-    while(iswspace(static_cast<WCHAR>(*pOriginalQuery_))) {
+    while (iswspace(static_cast<WCHAR>(*pOriginalQuery_))) {
         ++pOriginalQuery_;
     }
     isSelectQuery_ = AreStrEqual(pOriginalQuery_, L"select", kSelectLength);
     isExecQuery_ = AreStrEqual(pOriginalQuery_, L"EXEC", kExecLength);
-    if (!isLimit || !isSelectQuery_) {
+    if (! isLimit || ! isSelectQuery_) {
         return;
     }
     if (limit == 0) {
@@ -70,8 +70,7 @@ QueryDecorator::QueryDecorator(
 }
 
 QueryDecorator::~QueryDecorator(void)
-{
-}
+{}
 
 LPCWSTR QueryDecorator::GetQuery(void) const
 {

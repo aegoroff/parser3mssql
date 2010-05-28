@@ -7,7 +7,7 @@
             Creation date: 2010-04-11
             \endverbatim
  * Copyright 2008-2009 Alexander Egorov <egoroff@gmail.com> (http://www.egoroff.spb.ru)
-*/
+ */
 
 #include "StdAfx.h"
 #include <algorithm>
@@ -16,13 +16,12 @@
 const char* kCharsetPattern = "CLIENTCHARSET=";
 
 ConnectionString::ConnectionString(const char* pRawString)
-    : cnString_(pRawString), containsCharset_(false)
-{
-}
+    : cnString_(pRawString)
+    , containsCharset_(false)
+{}
 
 ConnectionString::~ConnectionString(void)
-{
-}
+{}
 
 void ConnectionString::Parse()
 {
@@ -51,8 +50,8 @@ const std::string& ConnectionString::GetCharset() const
 }
 
 void ConnectionString::CopyCharset(
-                                   char* pDestination,
-                                   std::string::size_type destLength) const
+    char*                  pDestination,
+    std::string::size_type destLength) const
 {
     charset_._Copy_s(pDestination, destLength, charset_.length());
     pDestination[charset_.length()] = 0;
