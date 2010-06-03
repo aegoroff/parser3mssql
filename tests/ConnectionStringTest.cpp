@@ -7,28 +7,28 @@
             Creation date: 2010-04-11
             \endverbatim
  * Copyright 2008-2009 Alexander Egorov <egoroff@gmail.com> (http://www.egoroff.spb.ru)
-*/
+ */
 
 #include "StdAfx.h"
 #include "..\ConnectionString.h"
 #include "ConnectionStringTest.h"
 
-const char* kStringWithCharset = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes?ClientCharset=windows-1251";
-const char* kStringWithCharsetLowerCase = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes?clientcharset=windows-1251";
+const char* kStringWithCharset =
+    "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes?ClientCharset=windows-1251";
+const char* kStringWithCharsetLowerCase =
+    "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes?clientcharset=windows-1251";
 const char* kStringWithoutCharset = "mssql://server=egoroff-home^;database=Busy^;Trusted_Connection=Yes";
 const std::string kOleString(kStringWithoutCharset);
 
 ConnectionStringTest::ConnectionStringTest(void)
-{    
-}
+{}
 
 ConnectionStringTest::~ConnectionStringTest(void)
-{
-}
+{}
 
 TEST_F(ConnectionStringTest, Constructor)
 {
-	ConnectionString str(kStringWithCharset);
+    ConnectionString str(kStringWithCharset);
 }
 
 TEST_F(ConnectionStringTest, ParseWithCharset)
@@ -68,5 +68,5 @@ TEST_F(ConnectionStringTest, CopyCharset)
     char* pCharset = new char[str.CharsetLength()];
     str.CopyCharset(pCharset, str.CharsetLength());
     EXPECT_STREQ("WINDOWS-1251", pCharset);
-    delete [] pCharset;
+    delete[] pCharset;
 }

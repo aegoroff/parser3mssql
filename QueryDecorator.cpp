@@ -50,7 +50,7 @@ QueryDecorator::QueryDecorator(
     }
     isSelectQuery_ = AreStrEqual(pOriginalQuery_, L"select", kSelectLength);
     isExecQuery_ = AreStrEqual(pOriginalQuery_, L"EXEC", kExecLength);
-    if (! isLimit || ! isSelectQuery_) {
+    if (!isLimit || !isSelectQuery_) {
         return;
     }
     if (limit == 0) {

@@ -7,7 +7,7 @@
             Creation date: 2010-04-11
             \endverbatim
  * Copyright 2008-2009 Alexander Egorov <egoroff@gmail.com> (http://www.egoroff.spb.ru)
-*/
+ */
 
 #include "StdAfx.h"
 #include "..\QueryDecorator.h"
@@ -20,12 +20,10 @@ const wchar_t* kExecWithLeadingSpaces = L"  EXEC spClient @ClientId = '5C16B5A5-
 const wchar_t* kDelete = L"DELETE FROM Table WHERE id = 1";
 
 QueryDecoratorTest::QueryDecoratorTest(void)
-{
-}
+{}
 
 QueryDecoratorTest::~QueryDecoratorTest(void)
-{
-}
+{}
 
 TEST_F(QueryDecoratorTest, SelectWithoutLimit)
 {

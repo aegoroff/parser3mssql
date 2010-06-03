@@ -50,7 +50,8 @@ inline void ComSession::DumpErrorInfo(
 
     // Only ask for error information if the interface supports
     // it.
-    if (FAILED(pObjectWithError->QueryInterface(IID_ISupportErrorInfo, reinterpret_cast<void**>(&pISupportErrorInfo)))) {
+    if (FAILED(pObjectWithError->QueryInterface(IID_ISupportErrorInfo,
+                                                reinterpret_cast<void**>(&pISupportErrorInfo)))) {
         *pOstr << L"SupportErrorErrorInfo interface not supported" << std::endl;
         return;
     }
@@ -69,7 +70,8 @@ inline void ComSession::DumpErrorInfo(
     }
     // Test to see if it's a valid OLE DB IErrorInfo interface
     // exposing a list of records.
-    if (FAILED(pIErrorInfoAll->QueryInterface(IID_IErrorRecords, reinterpret_cast<void**>(&pIErrorRecords))) ) {
+    if (FAILED(pIErrorInfoAll->QueryInterface(IID_IErrorRecords,
+                                              reinterpret_cast<void**>(&pIErrorRecords))) ) {
         // IErrorInfo is valid; get the source and
         // description to see what it is.
         WriteErrorMessage(pIErrorInfoAll, pOstr);

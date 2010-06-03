@@ -18,7 +18,7 @@ inline void Client::InitializeAndEstablishConnection()
     bool result = dbinit.AddProperty(
         DBPROP_INIT_PROVIDERSTRING,
         connectionString_);
-    if (! result) {
+    if (!result) {
         throw std::exception("Failed to initialize connection");
     }
     HRESULT r = ds_.Open(CLSID_SQLNCLI, &dbinit);

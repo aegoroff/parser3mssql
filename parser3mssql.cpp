@@ -41,7 +41,7 @@ inline void SqlNativeDriver::ValidateColumns(ULONG* pColumnsCount, SQL_Driver_se
     if (pColumnsCount == NULL) {
         rServices._throw("null column number pointer");
     }
-    if (! (*pColumnsCount)) {
+    if (!(*pColumnsCount)) {
         rServices._throw("result contains no columns");
     }
     if (*pColumnsCount > kMaxColumnsCount) {
@@ -84,7 +84,7 @@ void SqlNativeDriver::connect(
 
     try {
         rConnection.pClient = new Client(CStringW(str.GetOleDBString().c_str()));
-    } catch (const std::exception& e)    {
+    } catch (const std::exception& e) {
         _throw(rServices, e);
     }
 }
@@ -165,13 +165,13 @@ void SqlNativeDriver::query(
     CStringW sql = CA2W(pStatement, codePage_);
 
     LPCWSTR pSql = sql.GetString();
-    QueryDecorator decorator(pSql, limit, offset, ! IsNoLimit(limit));
+    QueryDecorator decorator(pSql, limit, offset, !IsNoLimit(limit));
 
     try {
         // Server cursors are created only for statements that begin with
         // SELECT
         // EXEC[ute] procedure_name
-        if (! decorator.IsSelectQuery() && ! decorator.IsExecQuery()) {
+        if (!decorator.IsSelectQuery() && !decorator.IsExecQuery()) {
             pClient->ExecuteNonQuery(sql);
             return;
         }

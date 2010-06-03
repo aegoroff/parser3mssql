@@ -7,7 +7,7 @@
             Creation date: 2010-04-11
             \endverbatim
  * Copyright 2008-2009 Alexander Egorov <egoroff@gmail.com> (http://www.egoroff.spb.ru)
-*/
+ */
 
 #include "StdAfx.h"
 #include "..\wexception.h"
@@ -17,18 +17,16 @@ using namespace std;
 
 const wchar_t* kMessage = L"An exception occured";
 
-WExceptionTest::WExceptionTest(void) 
-{
-}
+WExceptionTest::WExceptionTest(void)
+{}
 
 WExceptionTest::~WExceptionTest(void)
-{
-}
+{}
 
 TEST_F(WExceptionTest, DefaultConstructor)
 {
     wexception exc;
-    EXPECT_EQ(0, exc.GetMessage() -> length());
+    EXPECT_EQ(0, exc.GetMessage()->length());
 }
 
 TEST_F(WExceptionTest, StringConstructor)
