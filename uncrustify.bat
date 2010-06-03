@@ -20,7 +20,7 @@ set filesuffix=*
 :run
 FOR /F "tokens=*" %%G IN ('DIR /B /S %searchdir%\*.%filesuffix%') DO (
 echo Indenting file "%%G"
-"D:/soft/Programming/tools/uncrustify/uncrustify.exe" -f "%%G" -c "uncrustify.cfg" -o indentoutput.tmp
+"%UNCRUSTIFY_PATH%/uncrustify.exe" -f "%%G" -c "uncrustify.cfg" -o indentoutput.tmp
 move /Y indentoutput.tmp "%%G"
 
 )
@@ -28,7 +28,7 @@ GOTO ende
 
 :indentFile
 echo Indenting one file %1
-"D:/soft/Programming/tools/uncrustify/uncrustify.exe" -f "%1" -c "uncrustify.cfg" -o indentoutput.tmp
+"%UNCRUSTIFY_PATH%/uncrustify.exe" -f "%1" -c "uncrustify.cfg" -o indentoutput.tmp
 move /Y indentoutput.tmp "%1"
 
 
