@@ -52,7 +52,6 @@
 	<Target Name="Build" DependsOnTargets="Installer">
 		<Exec
 			Command='python.exe $(MSBuildProjectDirectory)\googlecode_upload.py -p parser3mssql -u $(GoogleLogin) -w $(GooglePassword) -s "API$(ApiVersion) Build $(Build)" -l Featured $(BinaryArchive)'
-			Timeout="30000"
 			Condition=" '$(IsUpload)'=='true' "/>
 		<Message Text="parser3mssql Build Complete"/>
 	</Target>
