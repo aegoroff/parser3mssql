@@ -14,6 +14,8 @@
 		<ApiVersion>10</ApiVersion>
 		<FtpLogin>1</FtpLogin>
 		<FtpPassword>1</FtpPassword>
+		<GoogleLogin>1</GoogleLogin>
+		<GooglePassword>1</GooglePassword>
 		<FtpFolder>ftp://somehost.com/folder</FtpFolder>
 		<SvnPath>http://host.com/svn/parser3mssql/trunk</SvnPath>
 		<BinaryArchive>parser3sql_$(ApiVersion)_$(Build)_win32_mssql.zip</BinaryArchive>
@@ -52,14 +54,10 @@
 		<Zip Files="@(ZipFiles)" ZipFileName="$(BinaryArchive)" Flatten="true"/>
 	</Target>
 	<Target Name="Build" DependsOnTargets="Installer">
-		<FtpUpload 
-			LocalFile="$(BinaryArchive)"
-			RemoteUri="$(FtpFolder)/parser3sql_$(ApiVersion)_0_win32_mssql.zip"
-			Username="$(FtpLogin)"
-			Password="$(FtpPassword)"
-			Condition=" '$(IsUpload)'=='true' "
-			UsePassive = 'true'
-		/>
+		<Exec
+			Command='python.exe $(MSBuildProjectDirectory)\googlecode_upload.py -p parser3mssql -u $(GoogleLogin) -w $(GooglePassword) -s "API$(ApiVersion) Build $(Build)" -l Featured'
+			Timeout="30000"
+			Condition=" '$(IsUpload)'=='true' "/>
 		<Message Text="parser3mssql Build Complete"/>
 	</Target>
 </Project>
