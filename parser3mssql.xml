@@ -12,12 +12,8 @@
 		<ProjectName>parser3mssql</ProjectName>
 		<Configuration>Release</Configuration>
 		<ApiVersion>10</ApiVersion>
-		<FtpLogin>1</FtpLogin>
-		<FtpPassword>1</FtpPassword>
 		<GoogleLogin>1</GoogleLogin>
 		<GooglePassword>1</GooglePassword>
-		<FtpFolder>ftp://somehost.com/folder</FtpFolder>
-		<SvnPath>http://host.com/svn/parser3mssql/trunk</SvnPath>
 		<BinaryArchive>parser3sql_$(ApiVersion)_$(Build)_win32_mssql.zip</BinaryArchive>
 		<ChangeLog>ChangeLog.txt</ChangeLog>
 		<TestsFileNameWithoutExt>tests</TestsFileNameWithoutExt>
