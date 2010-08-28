@@ -16,7 +16,6 @@
 		<GooglePassword>1</GooglePassword>
 		<BinaryArchive>parser3sql_$(ApiVersion)_$(Build)_win32_mssql.zip</BinaryArchive>
 		<ChangeLog>ChangeLog.txt</ChangeLog>
-		<TestsFileNameWithoutExt>tests</TestsFileNameWithoutExt>
 	</PropertyGroup>
 	<ItemGroup>
 		<ZipFiles Include="$(MSBuildProjectDirectory)\$(Configuration)\$(ProjectName).dll"/>
@@ -42,8 +41,10 @@
 		<MSBuild Projects="parser3mssql.sln" Properties="Configuration=$(Configuration)" />
 	</Target>
 	<Target Name="UnitTests" DependsOnTargets="Compile">
-		<Exec Command="$(Configuration)\$(TestsFileNameWithoutExt).exe --gtest_catch_exceptions --gtest_output=xml:" Timeout="30000" IgnoreExitCode="true"/>
-		<ImportGoogleTests TestResultsPath="$(MSBuildProjectDirectory)\$(TestsFileNameWithoutExt).xml"/>
+		<RunGoogleTests
+			TestExePath="$(Configuration)\tests.exe"
+			CatchGtestExceptions="true"
+		/>
 	</Target>
 	<Target Name="Installer" DependsOnTargets="UnitTests">
 		<Message Text="BinaryArchive: $(BinaryArchive)"/>
