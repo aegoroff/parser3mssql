@@ -50,7 +50,7 @@ inline void ComSession::DumpErrorInfo(
 
     // Only ask for error information if the interface supports
     // it.
-    if (FAILED(pObjectWithError->QueryInterface(IID_ISupportErrorInfo,
+    if (pObjectWithError == NULL || FAILED(pObjectWithError->QueryInterface(IID_ISupportErrorInfo,
                                                 reinterpret_cast<void**>(&pISupportErrorInfo)))) {
         *pOstr << L"SupportErrorErrorInfo interface not supported" << std::endl;
         return;
