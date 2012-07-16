@@ -20,7 +20,6 @@
 	<ItemGroup>
 		<ZipFiles Include="$(MSBuildProjectDirectory)\$(Configuration)\$(ProjectName).dll"/>
 		<ZipFiles Include="$(MSBuildProjectDirectory)\README.txt"/>
-		<ZipFiles Include="$(MSBuildProjectDirectory)\$(ChangeLog)"/>
 	</ItemGroup>
 	<ItemGroup>
 		<ResourceFile Include="$(MSBuildProjectDirectory)\parser3mssql.rc" />
