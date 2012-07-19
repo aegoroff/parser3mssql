@@ -6,7 +6,7 @@
  * \date    \verbatim
             Creation date: 2010-04-11
             \endverbatim
- * Copyright 2008-2009 Alexander Egorov <egoroff@gmail.com> (http://www.egoroff.spb.ru)
+ * Copyright 2008-2012 Alexander Egorov <egoroff@gmail.com> (http://www.egoroff.spb.ru)
  */
 
 #include "StdAfx.h"
