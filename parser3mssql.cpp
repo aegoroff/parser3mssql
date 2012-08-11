@@ -85,7 +85,7 @@ void SqlNativeDriver::connect(
     try {
         rConnection.pClient = new Client(CStringW(str.GetOleDBString().c_str()));
     } catch (const wexception& e) {
-		rServices._throw(CW2A(e.GetMessage()->c_str(), codePage_));
+        rServices._throw(CW2A(e.GetMessage()->c_str(), codePage_));
     } catch (const std::exception& e) {
         _throw(rServices, e);
     }
@@ -202,7 +202,7 @@ void SqlNativeDriver::ExecuteReader(
     CCommand<CDynamicStringAccessorW> cmd;
     pClient->ExecuteReader(decorator.GetQuery(), &cmd);
     
-	HRESULT result = cmd.MoveFirst();
+    HRESULT result = cmd.MoveFirst();
     DBORDINAL nColumns = cmd.GetColumnCount();
     ValidateColumns(&nColumns, rServices);
     SQL_Error sqlError;
@@ -210,9 +210,9 @@ void SqlNativeDriver::ExecuteReader(
         CStringW name(cmd.GetColumnName(i));
         InsertColumn(name, rConnection, rHandlers, sqlError);
     }
-	if (result != DB_S_ENDOFROWSET) {
-		ReadResults(cmd, rConnection, rHandlers, offset, limit, nColumns, &cmd);
-	}
+    if (result != DB_S_ENDOFROWSET) {
+        ReadResults(cmd, rConnection, rHandlers, offset, limit, nColumns, &cmd);
+    }
 }
 
 void SqlNativeDriver::ExecuteReader(
@@ -266,9 +266,9 @@ void SqlNativeDriver::ExecuteReader(
     cmd.Bind();
 
     result = cmd.MoveFirst();
-	if (result != DB_S_ENDOFROWSET) {
-		ReadResults(cmd, rConnection, rHandlers, offset, limit, nColumns, pBind);
-	}
+    if (result != DB_S_ENDOFROWSET) {
+        ReadResults(cmd, rConnection, rHandlers, offset, limit, nColumns, pBind);
+    }
 }
 
 void SqlNativeDriver::InsertColumn(
