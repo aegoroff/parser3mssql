@@ -15,12 +15,10 @@
 		<GoogleLogin>1</GoogleLogin>
 		<GooglePassword>1</GooglePassword>
 		<BinaryArchive>parser3sql_$(ApiVersion)_$(Build)_win32_mssql.zip</BinaryArchive>
-		<ChangeLog>ChangeLog.txt</ChangeLog>
 	</PropertyGroup>
 	<ItemGroup>
 		<ZipFiles Include="$(MSBuildProjectDirectory)\$(Configuration)\$(ProjectName).dll"/>
 		<ZipFiles Include="$(MSBuildProjectDirectory)\README.txt"/>
-		<ZipFiles Include="$(MSBuildProjectDirectory)\$(ChangeLog)"/>
 	</ItemGroup>
 	<ItemGroup>
 		<ResourceFile Include="$(MSBuildProjectDirectory)\parser3mssql.rc" />
