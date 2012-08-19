@@ -1,12 +1,11 @@
-﻿Для сборки необходимо:
+﻿Build requirements:
 
 1. Visual Studio 2012
 
-2. Переменная окружения PARSER3PROJECT указывающая на местоположение каталога 
-с исходниками парсера. Согласно правилам сборки парсера, это каталог parser3project 
-находящийся в корне любого диска. Например если этот каталог находится на диске D, 
-значение переменной должно быть D:\parser3project
+2. PARSER3PROJECT environment variable that points to parser sources directory. 
+According to parser's build rules it's parser3project directory in the root directory of any drive. 
+For example if this directory is on the D drive, environment variable must be D:\parser3project
 
-3. Переменная окружения SQL_SDK_ROOT указывающая на местоположение MS SQL SDK 
-(устанавливается после установки Native клиента), 
-обычно это C:\Program Files\Microsoft SQL Server\90\SDK
+3. SQL_SDK_ROOT environment variable that points to MS SQL SDK 
+(Native client installs this), 
+usually C:\Program Files\Microsoft SQL Server\90\SDK
