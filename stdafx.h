@@ -56,7 +56,17 @@
 #pragma warning( disable : 28204 )
 #pragma warning( disable : 28243 )
 #pragma warning( disable : 6504 )
+
+#ifdef _MSC_VER
+#pragma warning( disable : 6001 )
+#endif
+
 #include <atldbcli.h>
+
+#ifdef _MSC_VER
+#pragma warning( default : 6001 ) /* Reset to default state */
+#endif
+
 #include <atldbsch.h>  // For Rowset Schema Information
 
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
