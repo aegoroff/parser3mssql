@@ -15,7 +15,7 @@
 
 inline void WriteErrorMessage(
     CComPtr<IErrorInfo>        pIErrorInfo,
-    __deref_out std::wostream* pOstr)
+    std::wostream* pOstr)
 {
     // IErrorInfo values.
     CComBSTR bstrDescription;
