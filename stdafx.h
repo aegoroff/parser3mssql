@@ -50,12 +50,13 @@
 #endif
 #endif
 
-#include <sqlncli.h>
 #pragma warning( disable : 6387 )
 #pragma warning( disable : 28251 )
 #pragma warning( disable : 28204 )
 #pragma warning( disable : 28243 )
 #pragma warning( disable : 6504 )
+
+#include <sqlncli.h>
 
 #ifdef _MSC_VER
 #pragma warning( disable : 6001 )
