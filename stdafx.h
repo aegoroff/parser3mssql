@@ -52,6 +52,10 @@
 
 #include <sqlncli.h>
 #pragma warning( disable : 6387 )
+#pragma warning( disable : 28251 )
+#pragma warning( disable : 28204 )
+#pragma warning( disable : 28243 )
+#pragma warning( disable : 6504 )
 #include <atldbcli.h>
 #include <atldbsch.h>  // For Rowset Schema Information
 
