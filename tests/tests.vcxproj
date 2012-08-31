@@ -66,6 +66,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>ConnectionString.obj;QueryDecorator.obj;wexception.obj;%(AdditionalDependencies)</AdditionalDependencies>
@@ -87,6 +88,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>ConnectionString.obj;QueryDecorator.obj;wexception.obj;%(AdditionalDependencies)</AdditionalDependencies>

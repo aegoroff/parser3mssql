@@ -39,6 +39,7 @@
 
 #pragma warning (push) // only this file
 #pragma warning(disable : 4389) // some gtest warnings
+#pragma warning(disable : 4722) // some gtest warnings
 #include "gtest.h"
 #pragma warning (pop)
 
