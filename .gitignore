@@ -1,0 +1,12 @@
+_ReSharper.parser3mssql/
+*.obj
+*.suo
+*.sdf
+*.pdb
+*.log
+*.tokens
+*.vcxproj.user
+*.DotSettings.user
+*.csproj.user
+Debug/
+Release/
